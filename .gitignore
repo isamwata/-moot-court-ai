@@ -1,0 +1,41 @@
+# Virtual environment
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Model files (too large for GitHub)
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# FAISS index files (can be regenerated)
+*.faiss
+
+# Large data files
+*.pdf
+*.jsonl
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
