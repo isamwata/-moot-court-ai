@@ -42,13 +42,17 @@ def argue_case(facts, issues=None):
         print(f"📋 LEGAL ISSUES: {issues}")
     
     # Load and find relevant precedents
-    precedents = load_precedents()
-    relevant_precedents = find_relevant_precedents(facts, precedents)
-    
-    print(f"\n🔍 Found {len(relevant_precedents)} relevant legal precedents:")
-    for i, precedent in enumerate(relevant_precedents, 1):
-        source = precedent.get("source", "unknown")
-        print(f"   {i}. {source}")
+    try:
+        precedents = load_precedents()
+        relevant_precedents = find_relevant_precedents(facts, precedents)
+        
+        print(f"\n🔍 Found {len(relevant_precedents)} relevant legal precedents:")
+        for i, precedent in enumerate(relevant_precedents, 1):
+            source = precedent.get("source", "unknown")
+            print(f"   {i}. {source}")
+    except Exception as e:
+        print(f"⚠️ Warning: Could not load precedents: {e}")
+        relevant_precedents = []
     
     print(f"\n{'='*60}")
     print("🎭 AI-GENERATED LEGAL ARGUMENTS")

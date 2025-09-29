@@ -244,13 +244,26 @@ def show_argue_case_page():
             progress_bar.progress(25)
             
             query = f"{facts} {issues}" if issues.strip() else facts
-            precedents = retrieve(query, top_k=3)
+            try:
+                precedents = retrieve(query, top_k=3)
+            except Exception as e:
+                st.warning(f"Could not search precedents: {e}")
+                precedents = []
             
             # Step 2: Generate arguments
             status_text.text("🎭 Generating AI legal arguments...")
             progress_bar.progress(50)
             
-            arguments = argue_case(facts, issues)
+            try:
+                arguments = argue_case(facts, issues)
+            except Exception as e:
+                st.error(f"Error generating arguments: {str(e)}")
+                # Provide fallback arguments
+                arguments = {
+                    "claimant": "Error generating claimant arguments. Please try again.",
+                    "respondent": "Error generating respondent arguments. Please try again.",
+                    "judge": "Error generating judge decision. Please try again."
+                }
             
             # Step 3: Display results
             status_text.text("📊 Preparing results...")
@@ -264,7 +277,7 @@ def show_argue_case_page():
             display_case_results(facts, issues, arguments, precedents)
             
         except Exception as e:
-            st.error(f"Error generating arguments: {str(e)}")
+            st.error(f"Unexpected error: {str(e)}")
             progress_bar.empty()
             status_text.empty()
 
